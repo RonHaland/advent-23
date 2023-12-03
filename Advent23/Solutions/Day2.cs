@@ -12,7 +12,7 @@ public class Day2 : BaseDay
         var results = games.Where(g => g.ContainsLessThan(12, 13, 14)).Sum(g => g.Id);
         Console.WriteLine(results);
 
-        Console.WriteLine("--- PART 1 ---");
+        Console.WriteLine("--- PART 2 ---");
         results = games.Sum(g => g.Power);
         Console.WriteLine(results);
     }
