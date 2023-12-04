@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using static Advent23.Solutions.Day4;
 
 namespace Advent23.Solutions;
 
@@ -35,12 +37,12 @@ public class Day4 : BaseDay
 
 
         Console.WriteLine("--- PART 2 ---");
-        Console.WriteLine("This takes a while... 🐌");
+
         var allTickets = new Queue<Ticket>(tickets);
         var count = allTickets.Count;
         while (allTickets.TryDequeue(out var ticket))
         {
-            var winningsCount = ticket.WinningNumbers.Count(w => ticket.MyNumbers.Contains(w));
+            var winningsCount = ticket.WinningCount;
             var index = tickets.IndexOf(ticket);
 
             var copies = tickets.GetRange(index + 1, winningsCount);
@@ -50,15 +52,23 @@ public class Day4 : BaseDay
                 allTickets.Enqueue(c);
             });
         }
-
         Console.WriteLine(count);
     }
 
-    internal class Ticket(int Id, IEnumerable<int> WinningNumbers, IEnumerable<int> MyNumbers)
+    internal class Ticket
     {
-        public int Id { get; set; } = Id;
-        public IEnumerable<int> WinningNumbers { get; set; } = WinningNumbers;
-        public IEnumerable<int> MyNumbers { get; set; } = MyNumbers;
+        public int Id { get; set; }
+        public IEnumerable<int> WinningNumbers { get; set; }
+        public IEnumerable<int> MyNumbers { get; set; }
 
+        public Ticket(int id, IEnumerable<int> winningNumbers, IEnumerable<int> myNumbers)
+        {
+            Id = id;
+            WinningNumbers = winningNumbers;
+            MyNumbers = myNumbers;
+
+            WinningCount = WinningNumbers.Count(w => MyNumbers.Contains(w));
+        }
+        public int WinningCount { get; set; }
     }
 }
