@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
-using static Advent23.Solutions.Day4;
+﻿using System.Text.RegularExpressions;
 
 namespace Advent23.Solutions;
 
