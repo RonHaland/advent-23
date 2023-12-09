@@ -7,7 +7,8 @@ public abstract class BaseDay
     public string[] InputLines { get; set; }
     public BaseDay(int number)
     {
-        Input = File.ReadAllText($"./Inputs/{number}.txt");
+        var inputPath = $"./Inputs/{number}.txt";
+        Input = (File.Exists(inputPath)) ? File.ReadAllText(inputPath) : "";
         InputLines = Input.Split(Environment.NewLine);
         Number = number;
     }
