@@ -23,11 +23,12 @@ public class Day10 : BaseDay
         var steps = 1;
         while (currentPipe != startPipe)
         {
+            currentPipe.MainLoop = true;
             steps++;
             var nextPreviousPos = currentPipe.Position;
             currentPipe = currentPipe.GetNextPipe(previousPos, pipes);
-            currentPipe.MainLoop = true;
             previousPos = nextPreviousPos;
+            currentPipe.MainLoop = true;
         }
         Console.WriteLine(steps/2);
 
@@ -41,7 +42,7 @@ public class Day10 : BaseDay
         spaces.ForEach(s =>
         {
             var crossingLoopSegments = mainLoopParts
-                                        .Where(p => p.Symbol != '-')
+                                        .Where(p => p.Connections.Any(c => c.Y == p.Position.Y-1))
                                         .Where(p => p.Position.X < s.Position.X && p.Position.Y == s.Position.Y)
                                         .ToList();
             
@@ -70,6 +71,7 @@ public class Day10 : BaseDay
         public char Symbol { get; }
         public Pos Position { get; set; }
     }
+
     private sealed class Space : IMapItem
     {
         public Space(char input, Pos position)
@@ -131,6 +133,7 @@ public class Day10 : BaseDay
             return nextPipe;
         }
     }
+
     private sealed class Pos
     {
         public int X { get; set; }
